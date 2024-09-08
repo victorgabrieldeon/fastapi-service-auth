@@ -1,3 +1,10 @@
+## 0.4.0 (2024-09-07)
+
+### Feat
+
+- **src/data/usecases**: add CreateUserRepository dependency to ImplRegisterUserUseCase
+- **src/data/protocols/repositories**: add CreateUserRepository interface
+
 ## 0.3.0 (2024-09-07)
 
 ### Feat
