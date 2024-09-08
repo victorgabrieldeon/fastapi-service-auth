@@ -18,4 +18,20 @@ class RegisterUserUseCase(ABC):
     Response = RegisterUserResponse
 
     @abstractmethod
-    async def execute(self, params: Params) -> Response: ...
+    async def execute(self, params: Params) -> Response:
+        """
+        Register a new user in the system
+
+        Rules:
+        - Check if email is available
+
+        ### Raises:
+            ValueError: If email is not available
+
+        ### Params:
+            email: str - User email to register
+            password: str - User password to register
+
+        ### Returns:
+            User - The user registered
+        """
