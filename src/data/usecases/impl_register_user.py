@@ -1,12 +1,12 @@
 from uuid import uuid4
 
-from data.protocols.cryptography.hasher import Hasher
-from data.protocols.repositories.create_user_repository import CreateUserRepository
-from domain.models.user import User
-from domain.usecases.register_user_usecase import (
+from src.data.protocols.cryptography.hasher import Hasher
+from src.data.protocols.repositories.create_user_repository import CreateUserRepository
+from src.domain.models.user import User
+from src.domain.usecases.register_user_usecase import (
     RegisterUserUseCase,
 )
-from domain.validators.email_available_validator import EmailAvailableValidator
+from src.domain.validators.email_available_validator import EmailAvailableValidator
 
 
 class ImplRegisterUserUseCase(RegisterUserUseCase):

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from domain.models.user import User
+from src.domain.models.user import User
 
 
 class GetUserByEmailRepository(ABC):

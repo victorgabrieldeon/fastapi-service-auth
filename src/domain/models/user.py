@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 
-from domain.models.base import BaseEntity
+from src.domain.models.base import BaseEntity
 
 
 class User(BaseEntity):
