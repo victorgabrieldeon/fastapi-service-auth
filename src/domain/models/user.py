@@ -6,4 +6,4 @@ from src.domain.models.base import BaseEntity
 class User(BaseEntity):
     email: EmailStr
     hashed_password: str
-    is_active: bool
+    is_active: bool = True

@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from src.data.protocols.cryptography.hasher import Hasher
 from src.data.protocols.repositories.create_user_repository import CreateUserRepository
 from src.domain.models.user import User
@@ -29,10 +27,8 @@ class ImplRegisterUserUseCase(RegisterUserUseCase):
         hashed_password = await self.hasher.hash(params.password)
 
         user = User(
-            id=str(uuid4()),
             email=params.email,
             hashed_password=hashed_password,
-            is_active=True,
         )
 
         user = await self.create_user_repository.create(user)
