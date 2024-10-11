@@ -1,3 +1,4 @@
+from src.data.exceptions.email import EmailNotAvailableError
 from src.data.protocols.cryptography.hasher import Hasher
 from src.data.protocols.repositories.create_user_repository import CreateUserRepository
 from src.domain.models.user import User
@@ -22,7 +23,7 @@ class ImplRegisterUserUseCase(RegisterUserUseCase):
         self, params: RegisterUserUseCase.Params
     ) -> RegisterUserUseCase.Response:
         if not await self.email_avaiable_validator.validate(params.email):
-            raise ValueError("Email not available")
+            raise EmailNotAvailableError
 
         hashed_password = await self.hasher.hash(params.password)
 
