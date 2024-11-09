@@ -1,4 +1,4 @@
-from presentation.http.exceptions.http_exception import BaseHttpException
+from src.presentation.http.exceptions import BaseHttpException
 
 
 class NotFound(BaseHttpException):
