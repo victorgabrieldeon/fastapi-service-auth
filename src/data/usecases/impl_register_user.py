@@ -27,11 +27,10 @@ class ImplRegisterUserUseCase(RegisterUserUseCase):
 
         hashed_password = await self.hasher.hash(params.password)
 
-        user = User(
-            email=params.email,
-            hashed_password=hashed_password,
-        )
+        user = User.create(email=params.email, hashed_password=hashed_password)
 
         user = await self.create_user_repository.create(user)
 
-        return RegisterUserUseCase.Response(**user.model_dump())
+        return RegisterUserUseCase.Response(
+            user=user,
+        )

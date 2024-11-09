@@ -10,7 +10,8 @@ class RegisterUserParams(BaseModel):
     password: str
 
 
-class RegisterUserResponse(User): ...
+class RegisterUserResponse(BaseModel):
+    user: User
 
 
 class RegisterUserUseCase(ABC):
