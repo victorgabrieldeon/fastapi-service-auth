@@ -1,7 +1,7 @@
-from src.data.exceptions.email import EmailNotAvailableError
+from data.exceptions.auth import EmailNotAvailableError, PasswordValidationError
+from data.validators.password import PasswordValidatorBuilder
 from src.data.protocols.cryptography.hasher import Hasher
 from src.data.protocols.repositories.create_user_repository import CreateUserRepository
-from src.domain.models.user import User
 from src.domain.usecases.register_user_usecase import (
     RegisterUserUseCase,
 )
@@ -25,11 +25,24 @@ class ImplRegisterUserUseCase(RegisterUserUseCase):
         if not await self.email_avaiable_validator.validate(params.email):
             raise EmailNotAvailableError
 
+        password_validator = (
+            PasswordValidatorBuilder()
+            .min_length(8)
+            .no_spaces()
+            .max_length(20)
+            .has_min_digits(1)
+            .has_min_special_chars(1)
+            .has_min_uppercase(1)
+        )
+
+        if not await password_validator.validate(params.password):
+            raise PasswordValidationError()
+
         hashed_password = await self.hasher.hash(params.password)
 
-        user = User.create(email=params.email, hashed_password=hashed_password)
-
-        user = await self.create_user_repository.create(user)
+        user = await self.create_user_repository.create(
+            email=params.email, hashed_password=hashed_password
+        )
 
         return RegisterUserUseCase.Response(
             user=user,
