@@ -1,2 +1,2 @@
-class AuthError(Exception):
+class ApiException(Exception):
     pass

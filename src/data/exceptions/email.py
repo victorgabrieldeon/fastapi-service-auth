@@ -1,4 +1,4 @@
-from data.exceptions.base import AuthError
+from data.exceptions.base import ApiException
 
 
-class EmailNotAvailableError(AuthError): ...
+class EmailNotAvailableError(ApiException): ...
