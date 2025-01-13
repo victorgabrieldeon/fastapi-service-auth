@@ -3,7 +3,7 @@ from typing import Callable, Self
 from data.validators.interface import Validator
 
 
-class PasswordValidatorBuilder(Validator[str]):
+class StringValidator(Validator[str]):
     def __init__(self) -> None:
         self.validators: list[Callable[[str], bool]] = []
 

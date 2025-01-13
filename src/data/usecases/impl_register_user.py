@@ -1,5 +1,5 @@
 from data.exceptions.auth import EmailNotAvailableError, PasswordValidationError
-from data.validators.password import PasswordValidatorBuilder
+from data.validators.string import StringValidator
 from src.data.protocols.cryptography.hasher import Hasher
 from src.data.protocols.repositories.create_user_repository import CreateUserRepository
 from src.domain.usecases.register_user_usecase import (
@@ -25,18 +25,28 @@ class ImplRegisterUserUseCase(RegisterUserUseCase):
         if not await self.email_avaiable_validator.validate(params.email):
             raise EmailNotAvailableError
 
+        MIN_LENGHT = 8
+        MAX_LENGHT = 20
+        MIN_SPECIAL_CHARS = 1
+        MIN_UPPERCASE = 1
+        MIN_DIGITS = 1
+
         password_validator = (
-            PasswordValidatorBuilder()
-            .min_length(8)
+            StringValidator()
+            .min_length(MIN_LENGHT)
             .no_spaces()
-            .max_length(20)
-            .has_min_digits(1)
-            .has_min_special_chars(1)
-            .has_min_uppercase(1)
+            .max_length(MAX_LENGHT)
+            .has_min_digits(MIN_DIGITS)
+            .has_min_special_chars(MIN_SPECIAL_CHARS)
+            .has_min_uppercase(MIN_UPPERCASE)
         )
 
         if not await password_validator.validate(params.password):
-            raise PasswordValidationError()
+            raise PasswordValidationError(
+                f"Pasword must have at least {MIN_LENGHT} characters,"
+                f" no spaces, at most {MAX_LENGHT} characters, {MIN_DIGITS} digits,"
+                f" {MIN_SPECIAL_CHARS} special characters and {MIN_UPPERCASE} uppercase characters"
+            )
 
         hashed_password = await self.hasher.hash(params.password)
 
